@@ -13,8 +13,8 @@
 
 ### Introduce
 Electron는 GitHub에서 HTML, CSS 및 JavaScript를 사용하여 데스크톱 응용 프로그램을 개발하기 위해 
-개발된 오픈 소스 라이브러리입니다. Electron 은 Chromium과 Node.js를 단일 실행으로 합치고 앱을 
-Mac, Windows 와 Linux 용으로 패키지화 하여 사용가능하게 합니다.
+개발된 오픈 소스 라이브러리다. Electron 은 Chromium과 Node.js를 단일 실행으로 합치고 앱을 
+Mac, Windows 와 Linux 용으로 패키지화 하여 사용가능하게 한다.
 
 - Electron 구조
 ![Image](./img/structure.JPG)
@@ -51,8 +51,8 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 
-//윈도우 객체의 전역으로 선언합니다. 그렇지 않으면 윈도우가 자동으로 닫힙니다.
-//자바 스크립트 객체가 가비지 수집 될 때 자동으로 닫힙니다.
+//윈도우 객체의 전역으로 선언합니다. 그렇지 않으면 윈도우가 자동으로 닫는다.
+//자바 스크립트 객체가 가비지 수집 될 때 자동으로 닫는다.
 let win
 
 function createWindow () {
@@ -66,19 +66,19 @@ function createWindow () {
     slashes: true
   }))
 
-  // 개발툴을 사용하기 위해 오픈합니다.
+  // 개발툴을 사용하기 위해 오픈한다.
   win.webContents.openDevTools()
 
-  // 윈도우가 닫힐 때 발생되는 이벤트 입니다.
+  // 윈도우가 닫힐 때 발생되는 이벤트다.
   win.on('closed', () => {
     win = null
   })
 }
 
-//사용 준비가 완료되면 윈도우를 엽니다.
+//사용 준비가 완료되면 윈도우를 연다.
 app.on('ready', createWindow)
 
-// 모든 창이 닫히면 종료합니다.
+// 모든 창이 닫히면 종료한다.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
@@ -86,14 +86,14 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  // macOS에서 독 아이콘이 클릭되고 다른 창은 열리지 않습니다.
+  // macOS에서 독 아이콘이 클릭되고 다른 창은 열리지 않는다.
   if (win === null) {
     createWindow()
   }
 })
 ```
 
-- renderer process에서  표시하려는 웹페이지(index.html)를 만듭니다.
+- renderer process에서  표시하려는 웹페이지(index.html)를 만든다.
 ```html
 <!DOCTYPE html>
 <html lang="en">
