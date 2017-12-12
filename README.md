@@ -110,7 +110,7 @@ app.on('activate', () => {
 - Electron App 실행
 ```bash
 $ ./node_modules/.bin/electron main.js
-$ electron main.js
+$ electron index.js
 ```
 
 ### Inter process communication
