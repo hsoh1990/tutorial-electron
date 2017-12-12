@@ -1,0 +1,15 @@
+{
+  "name": "electron-tutorial",
+  "version": "1.0.0",
+  "description": "**Table of Contents**",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "1.7.9"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
