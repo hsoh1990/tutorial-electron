@@ -1,17 +1,17 @@
-## Electron Tutorial
+# Electron Tutorial
 
 **Table of Contents**
 
 - [Introduce](#Introduce)
-- [Quick start](#Quick start)
-- [Inter process communication](#Inter process communication)
-- [Usingu node modules](#Using node modules)
-- [Application Packaging](#Application Packaging)
+- [Quick start](#Quick-start)
+- [Inter process communication](#Inter-process-communication)
+- [Usingu node modules](#Using-node-modules)
+- [Application Packaging](#Application-Packaging)
 - [Reference](#Reference)
 - [Contributors](#Contributors)
 
 
-### Introduce
+## Introduce
 Electron는 GitHub에서 HTML, CSS 및 JavaScript를 사용하여 데스크톱 응용 프로그램을 개발하기 위해 
 개발된 오픈 소스 라이브러리다. Electron 은 Chromium과 Node.js를 단일 실행으로 합치고 앱을 
 Mac, Windows 와 Linux 용으로 패키지화 하여 사용가능하게 한다.
@@ -19,7 +19,7 @@ Mac, Windows 와 Linux 용으로 패키지화 하여 사용가능하게 한다.
 - Electron 구조
 ![Image](./img/structure.JPG)
 
-##### main process
+### main process
 Electron이 실행될 때 Node.js가 실행되는 부분을 main process라고 한다. main process는 새창을 
 생성하거나 윈도우, 맥, 리녹스의 네이티브 GUI를 조작할 수 있으며, Node.js에서 사용하는 모듈을 사용할 수 있다.   
 </br>
@@ -30,7 +30,7 @@ Electron이 실행될 때 Node.js가 실행되는 부분을 main process라고 �
 단일 페이지의 작동에만 영향을 준다. Electron의 BrowserWindow 클래스를 통해 main process에서 redererperocess를
 생성할 수 있다. BrowserWindow 클래스를 통해 생성된 인스턴스가 소멸할 때 renderer process도 같이 소멸된다.
 
-### Quick start
+## Quick start
 - 먼저 Electron 모듈을 설치한다.
 ```bash
 $ npm init -y
@@ -113,20 +113,20 @@ $ ./node_modules/.bin/electron main.js
 $ electron index.js
 ```
 
-### Inter process communication
+## Inter process communication
 
 #### ipcMain
 #### ipcRenderer
 
-### Using node modules
+## Using node modules
 
-### Application Packaging
+## Application Packaging
 
-### Reference
+## Reference
 - https://electronjs.org/docs
 - https://www.slideshare.net/deview/123-electron
 
-### Contributors
+## Contributors
 - 오형석[(wellstone@hanbat.ac.kr)](wellstone@hanbat.ac.kr)
 - 한밭대학교 무선통신소프트웨어 연구실 NRF-IoT-Platform 연구팀
 
