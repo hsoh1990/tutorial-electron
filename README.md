@@ -114,9 +114,56 @@ $ electron index.js
 ```
 
 ## Inter process communication
+electron 실행시 main, renderer 두개의 프로세스가 동작한다. electron에서는 main과 renderer는 비동기 통신을 지원하며, 통신 모듈은 
+ipcMain, ipcRenderer, remote가 있다.  
+ipcMain, ipcRenderer 모듈은 EventEmitter 클래스의 확장 인스턴스로 main 프로세스를 사용할 떄 renderer 프로세스가 보내닌 메시지를 동기/비동기로 처리한다.
 
-#### ipcMain
-#### ipcRenderer
+* EventEmitter    
+EventEmitter는 Node.js에서 지원하는 모듈로 이벤트를 등록하고 등록된 메시지를 통해 이벤트를 받는다.  
+예시는 다음과 같다.
+```javascript
+const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+//message가 event인 이벤트를 등록한다.
+myEmitter.on('event', () => {
+  console.log('A');
+});
+
+//message가 event인 이벤트를 발생한다.
+myEmitter.emit('event');
+```
+자세한 내용은 [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)를 참조한다.
+
+### ipcMain
+- 메시지를 보낼 때 이벤트 이름은 channel이다.
+- 동기 메시지에 회신 하려면 event.returnValue를 설정 해야한다.
+- 비동기 메시지를 다시 보낸 사람에 게 보내려면 event.sender.send(...)를 사용할 수 있다.
+
+main process 기본 구조는 다음과 같다.
+```javascript
+const {ipcMain} = require('electron')
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log(arg)  // arg 내용이 출력된다.
+  event.sender.send('asynchronous-reply', 'pong') // 비동기 메시지를 전송한다.
+})
+
+ipcMain.on('synchronous-message', (event, arg) => {
+  console.log(arg)  // arg 내용이 출력된다.
+  event.returnValue = 'pong' // 동기 메시지를 전송한다.
+}) 
+```
+ipcMain 모듈은 이벤트를 처리하기 위해 다음의 메소드를 가집니다.
+- ipcMain.on(channel, listener)  
+channel(String)을 수신하고 새로운 메시지가 도착하면 listener(Function)를 호출한다.
+- ipcMain.once(channel, listener)  
+일회성 channel(String)을 생성하고 새로운 메시지가 도착하면 listener(Function)를 호출 후 이벤트를 제거한다.
+- ipcMain.removeListener(channel, listener)  
+channel(String)에 대한 listener(Function)를 제거한다.
+-ipcMain.removeAllListeners([channel])  
+지정한 channel(String)의 listener(Function)들을 전부 제거합니다.
+
+### ipcRenderer
 
 ## Using node modules
 
@@ -125,6 +172,7 @@ $ electron index.js
 ## Reference
 - https://electronjs.org/docs
 - https://www.slideshare.net/deview/123-electron
+- https://nodejs.org/api/events.html
 
 ## Contributors
 - 오형석[(wellstone@hanbat.ac.kr)](wellstone@hanbat.ac.kr)
