@@ -5,7 +5,7 @@ const IpcMainClass = require('./communication/ipcMainClass');
 
 let win;
 
-function createWindow () {
+function createWindow() {
   win = new BrowserWindow({width: 800, height: 600});
   let ipcMain = new IpcMainClass();
   ipcMain.setIpc();
