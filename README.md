@@ -140,7 +140,7 @@ myEmitter.emit('event');
 - 동기 메시지에 회신 하려면 event.returnValue를 설정 해야한다.
 - 비동기 메시지를 다시 보낸 사람에 게 보내려면 event.sender.send(...)를 사용할 수 있다.
 
-main process 기본 구조는 다음과 같다.
+main process에서 사용은 다음과 같다.
 ```javascript
 const {ipcMain} = require('electron')
 ipcMain.on('asynchronous-message', (event, arg) => {
@@ -153,7 +153,7 @@ ipcMain.on('synchronous-message', (event, arg) => {
   event.returnValue = 'pong' // 동기 메시지를 전송한다.
 }) 
 ```
-ipcMain 모듈은 이벤트를 처리하기 위해 다음의 메소드를 가집니다.
+ipcMain 모듈은 이벤트를 처리하기 위해 다음의 메소드를 가진다.
 - ipcMain.on(channel, listener)  
 channel(String)을 수신하고 새로운 메시지가 도착하면 listener(Function)를 호출한다.
 - ipcMain.once(channel, listener)  
@@ -164,6 +164,18 @@ channel(String)에 대한 listener(Function)를 제거한다.
 지정한 channel(String)의 listener(Function)들을 전부 제거합니다.
 
 ### ipcRenderer
+rederer process에서 사용은 다음과 같다.
+```javascript
+const {ipcRenderer} = require('electron');
+
+ipcRenderer.send('asynchronous-message', 'ping')
+
+ipcRenderer.on('asynchronous-reply', (arg) => {
+    console.log(arg) // "pong" 출력
+})
+```
+대부분의 메소드는 ipcMain과 비슷하다.
+
 
 ## Using node modules
 
