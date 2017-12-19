@@ -59,9 +59,9 @@ function createWindow () {
   // 브라우저 창을 만듭니다.
   win = new BrowserWindow({width: 800, height: 600})
 
-  //index.html를 로드합니다.
+  //main.html를 로드합니다.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, 'main.html'),
     protocol: 'file:',
     slashes: true
   }))
@@ -175,6 +175,8 @@ ipcRenderer.on('asynchronous-reply', (arg) => {
 })
 ```
 대부분의 메소드는 ipcMain과 비슷하다.
+다음 ipc 통신을 통해 main, renderer 프로세스간의 통신은 ./communication/*.js를 통헤 등록해보고
+main.html에서 버튼은 생성해 이벤트를 발생시켜 확인한다.
 
 
 ## Using node modules
