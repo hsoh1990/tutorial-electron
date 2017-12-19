@@ -180,6 +180,32 @@ main.html에서 버튼은 생성해 이벤트를 발생시켜 확인한다.
 
 
 ## Using node modules
+electron에서는 main 프로세스를 통해 npm에서 제공한는 node 모듈을 사용할 수 있다.
+사용방법은 node.js에서 사용하는 것과 동일하게 npm을 통해 다운 받고 mamin 프로세스에서 모듈을 가져와 사용한다.
+이번에는 serialport 모둘을 사용하여 현재 연결된 장치 정보를 가져오도록 한다.
+
+```bash
+$ npm install serialport --save
+$ npm install --save-dev electron-rebuild
+$ ./node_modules/.bin/serialport-list -f json
+```
+
+설치가 완료되면 serialport-list모듈을 통해 현재 연결된 장치의 정보를 가져올 수 있다. 다음을 js에서 코딩하면 다음과 같다.
+
+```javascript
+var SerialPort = require('serialport');
+
+SerialPort.list(function (err, ports) {
+	console.log(ports);
+});
+```
+콘솔로 출력해본 데이터를 ipc 통신을 통해 데이터를 요청하고 html에서 리스트를 보도록 해본다.
+
+- renderer 프로세스에서 버튼를 만들어 해당 데이터를 요청한다.
+- main 프로세스에서 요청을 받아 serialport모듈을 사용해 데이터를 가져온다
+- main 프로세스에서 renderer프로세스로 값을 전달한다.
+- 화면에 데이터를 보여준다.
+
 
 ## Application Packaging
 

@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "description": "**Table of Contents**",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "serialport": "^6.0.4"
+  },
   "devDependencies": {
-    "electron": "1.7.9"
+    "electron": "1.7.9",
+    "electron-rebuild": "^1.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/electron main.js"
+    "start": "./node_modules/.bin/electron main.js",
+    "build":"./node_modules/.bin/electron-rebuild"
   },
   "author": "",
   "license": "ISC"
