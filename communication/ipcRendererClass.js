@@ -22,5 +22,6 @@ function reqDevice() {
 
 ipcRenderer.on('respDevice', (event, arg) => {
 	console.log(arg);
+	//jQuery('#deviceList').appand(arg[0].comName)
 });
 

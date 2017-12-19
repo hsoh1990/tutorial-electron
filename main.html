@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello Electron</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
     <script src="./communication/ipcRendererClass.js"></script>
 </head>
 <body>
     <h1>Hello Electron!!</h1>
-    <button onclick="ping()">Click Me!</button><br>
+    <button onclick="ping()">Click Me!</button>
+    <br><hr>
     <button onclick="reqDevice()">request Device List!</button>
+
+    <li id="deviceList"></li>
 </body>
 </html>

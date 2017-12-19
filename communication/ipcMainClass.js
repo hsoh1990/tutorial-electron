@@ -20,18 +20,23 @@ class ipcMainClass {
 		})
 		ipcMain.on('reqDevice', (event, arg) => {
 			console.log(arg);
-			let deviceList = thisClass.getDeviceList()
-			console.log(deviceList);
-			event.sender.send('respDevice', deviceList)
+			thisClass.getDeviceList().then(function (deviceList) {
+				console.log(deviceList);
+				event.sender.send('respDevice', deviceList)
+			})
+
 		})
 
 	}
 
 
 	getDeviceList() {
-		SerialPort.list(function (err, ports) {
-			return Promise.resolve(ports)
-		});
+		return new Promise(function (resolve) {
+			SerialPort.list(function (err, ports) {
+				resolve(ports)
+			});
+		})
+
 	}
 
 }
