@@ -17,7 +17,7 @@ Electron는 GitHub에서 HTML, CSS 및 JavaScript를 사용하여 데스크톱 �
 Mac, Windows 와 Linux 용으로 패키지화 하여 사용가능하게 한다.
 
 - Electron 구조
-![Image](./img/structure.JPG)
+![Image](./images/structure.JPG)
 
 ### main process
 Electron이 실행될 때 Node.js가 실행되는 부분을 main process라고 한다. main process는 새창을 
