@@ -11,7 +11,7 @@
     "build-osx": "electron-packager . AppName --platform=darwin --arch=all --icon=./assets/icon.icns --out ./dist --overwrite --asar",
     "build-linux": "electron-packager . AppName --platform linux --arch=all --out ./dist --overwrite --asar",
     "build-win32": "electron-packager . AppName --platform win32 --arch=ia32 --out ./dist --overwrite --asar",
-    "installer-mac": "electron-installer-dmg ./dist/AppName-darwin-x64/AppName.app serial-list --out=dist --icon=assets/icon.icns --overwrite"
+    "installer-osx": "electron-installer-dmg ./dist/AppName-darwin-x64/AppName.app serial-list --out=dist --icon=assets/icon.icns --overwrite"
   },
   "author": "hsoh1990",
   "license": "MIT",
