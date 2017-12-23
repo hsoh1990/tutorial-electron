@@ -20,8 +20,11 @@ function reqDevice() {
 	ipcRenderer.send('reqDevice', 'any');
 }
 
-ipcRenderer.on('respDevice', (event, arg) => {
-	console.log(arg);
-	//jQuery('#deviceList').appand(arg[0].comName)
+ipcRenderer.on('respDevice', (event, args) => {
+	console.log(args);
+	jQuery('#deviceList').empty()
+	for (let element of args) {
+		jQuery('#deviceList').append('<li>' + element.comName +'</li>')
+	}
 });
 

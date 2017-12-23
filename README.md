@@ -59,9 +59,9 @@ function createWindow () {
   // 브라우저 창을 만듭니다.
   win = new BrowserWindow({width: 800, height: 600})
 
-  //main.html를 로드합니다.
+  //index.html를 로드합니다.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'main.html'),
+    pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }))
@@ -110,7 +110,7 @@ app.on('activate', () => {
 - Electron App 실행
 ```bash
 $ ./node_modules/.bin/electron main.js
-$ electron index.js
+$ electron main.js
 ```
 
 ## Inter process communication
@@ -176,7 +176,7 @@ ipcRenderer.on('asynchronous-reply', (arg) => {
 ```
 대부분의 메소드는 ipcMain과 비슷하다.
 다음 ipc 통신을 통해 main, renderer 프로세스간의 통신은 ./communication/*.js를 통헤 등록해보고
-main.html에서 버튼은 생성해 이벤트를 발생시켜 확인한다.
+index.html에서 버튼은 생성해 이벤트를 발생시켜 확인한다.
 
 
 ## Using node modules
@@ -202,12 +202,88 @@ SerialPort.list(function (err, ports) {
 콘솔로 출력해본 데이터를 ipc 통신을 통해 데이터를 요청하고 html에서 리스트를 보도록 해본다.
 
 - renderer 프로세스에서 버튼를 만들어 해당 데이터를 요청한다.
+```html index.html
+<button onclick="reqDevice()">request Device List!</button>
+```
+index.html
+
+```javascript ipcRendererClass.js
+function reqDevice() {
+	ipcRenderer.send('reqDevice', 'any');
+}
+```
+ipcRendererClass.js
 - main 프로세스에서 요청을 받아 serialport모듈을 사용해 데이터를 가져온다
 - main 프로세스에서 renderer프로세스로 값을 전달한다.
+```javascript ipcMainClass.js
+ipcMain.on('reqDevice', (event, arg) => {
+    console.log(arg);
+    thisClass.getDeviceList().then(function (deviceList) {
+		console.log(deviceList);
+		event.sender.send('respDevice', deviceList)
+	})
+})
+```
+ipcMainClass.js
 - 화면에 데이터를 보여준다.
+```javascript ipcMainClass.js
+ipcRenderer.on('respDevice', (event, args) => {
+	console.log(args);
+	jQuery('#deviceList').empty()
+	for (let element of args) {
+		jQuery('#deviceList').append('<li>' + element.comName +'</li>')
+	}
+});
+```
+ipcRendererClass.js
 
 
 ## Application Packaging
+
+Electron으로 만든 앱을 배포하기 위해서는 앱을 Packaging후 깔끔하게 installer 파일로 빌드하여 배포하는게 해야한다.
+여기서는 기본적인 Packaging방법을 설명한다. Packaging은 electron-packager 모듈을 통해 각 OS에 따라서 빌드할 수 있다.
+
+먼저 모듈을 글로벌로 설치해야 한다.
+
+```bash
+$ npm install electron-packager --save-dev
+$ npm install electron-packager -g
+```
+다음 빌드를 하기위해서는 package.json을 수정해야한다.
+여기서 main.js의 위치를 제대로 추가하지 않으면 빌드에 성공해도 실행이 되지 않을 수 있으니 주의해야한다.
+
+다음 package.json에 script를 추가한다
+```json
+"scripts": {
+  . . . .
+  "build": "electron-packager . AppName  --out=dist --asar --overwrite --all",
+      "build-osx": "electron-packager . AppName --platform=darwin --arch=all --icon=./assets/icon.icns --out ./dist --overwrite --asar",
+      "build-linux": "electron-packager . AppName --platform linux --arch=all --out ./dist --overwrite --asar",
+      "build-win32": "electron-packager . AppName --platform win32 --arch=ia32 --out ./dist --overwrite --asar",
+}
+```
+
+자신의 OS에 따라 스크립트를 실행한다.
+```bash
+$ npm run build-osx
+```
+
+installer는 각 OS별 모듈이 따로 있으며, 사용방법은 모듈별로 따로 참고해야 한다.
+mac OS에서 사용할 수 있도록 .dmg로 만드는 방법은 다음과 같다.
+```bash
+$ npm install electron-installer-dmg --save-dev
+$ npm install electron-installer-dmg -g
+```
+다음 package.json에 script를 추가한다
+```json
+"scripts": {
+  . . . .
+  "installer-mac": "electron-installer-dmg ./dist/AppName-darwin-x64/AppName.app serial-list --out=dist --icon=assets/icon.icns --overwrite"
+}
+```
+빌드가 완료되면 dmg파일이 생성되고 이를 통해 배포하면 된다.
+
+참고 - windows 경우 electron-installer-squirrel-windows를 사용한다.
 
 ## Reference
 - https://electronjs.org/docs
@@ -215,7 +291,7 @@ SerialPort.list(function (err, ports) {
 - https://nodejs.org/api/events.html
 
 ## Contributors
-- 오형석[(wellstone@hanbat.ac.kr)](wellstone@hanbat.ac.kr)
+- 오형석[(ohs4123@gmail.com)](ohs4123@gmail.com)
 - 한밭대학교 무선통신소프트웨어 연구실 NRF-IoT-Platform 연구팀
 
 <br/>
